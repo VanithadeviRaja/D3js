@@ -1,0 +1,635 @@
+
+    $(function(){
+        if($( window ).width() < $( window ).height())
+        {
+            //alert();
+            $('#info').show();
+        }
+        $(window).resize(function() {
+            var width = window.innerWidth,
+                height = $("#chart").innerHeight();
+            force.size([width, height]).resume();
+            if($( window ).width() < $( window ).height())
+            {
+                //alert();
+                $('#info').show();
+            }
+            else
+            {
+                $('#info').hide();
+            }
+        });
+        function sc_down(){
+            $('#animated_div_scroll').removeClass('visible animated scrolldown scrolldown_r');
+            $('#animated_div_scroll').addClass('visible animated scrolldown');
+            setTimeout(function(){
+                sc_down1();
+            },1000)
+        }
+        function sc_down1(){
+            $('#animated_div_scroll').removeClass('visible animated scrolldown scrolldown_r');
+            $('#animated_div_scroll').addClass('visible animated scrolldown_r');
+            setTimeout(function(){
+                sc_down();
+            },200)
+        }
+        sc_down();
+        $('.img_change').mouseenter(function(){
+            //alert($(this).attr('_src'));
+            $(this).attr('src',("images/"+$(this).attr('_src')+".png"));
+        });
+        $('.img_change').mouseleave(function(){
+            //alert($(this).attr('_src'));
+            $(this).attr('src',("images/"+$(this).attr('_src')+"_g.png"));
+        });
+        $('.clearfix').show();
+
+        //$(document).on("click", ".big_popup", function() {
+
+        $('#fadeandscale').popup({
+            transition: 'all 0.3s'
+        });
+
+        $('#coverflow_close').click(function(){
+            $(this).fadeOut('slow');
+            $('#coverflow_parent').removeClass('page');
+            $('#coverflow_parent').addClass('page_r');
+            $('#fadeandscale_ul').html('');
+            $('#coverflow_loader').show();
+            $('#effects_parent').css('opacity','0');
+        });
+        $('#page_close').click(function(){
+            $(this).fadeOut('slow');
+            $('#page').removeClass('page');
+            $('#page').addClass('page_r');
+            $('#page_html').html('');
+            $('#next_post').fadeOut();
+        });
+$('#site-map').click(function(){
+            $.ajax({
+                url: 'site-map.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                    $('#next_post').show();
+                }
+            });
+        });
+$('#privacy-policy').click(function(){
+            $.ajax({
+                url: 'privacy.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                    $('#next_post').show();
+                }
+            });
+        });
+$('#copyright').click(function(){
+            $.ajax({
+                url: 'copyright.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });
+
+$('#our_products').click(function(){
+            $.ajax({
+                url: 'our_products.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });
+		
+		
+$('#the_sales_story').click(function(){
+            $.ajax({
+                url: 'the_sales_story.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });		
+		
+$('#the_hotel_story').click(function(){
+            $.ajax({
+                url: 'the_hotel_story.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });		
+
+
+$('#the_bank_story').click(function(){
+            $.ajax({
+                url: 'the_bank_story.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+		
+		
+		$('#the_retail_story').click(function(){
+            $.ajax({
+                url: 'the_retail_story.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+		
+		
+		$('#the_telco_story').click(function(){
+            $.ajax({
+                url: 'the_telco_story.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+		
+	$('#data_security_privacy').click(function(){
+            $.ajax({
+                url: 'data_security_privacy.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+
+
+
+$('#Our_Platform').click(function(){
+            $.ajax({
+                url: 'Our_Platform.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });
+		
+		
+		$('#Crayons_taste_graph').click(function(){
+            $.ajax({
+                url: 'Crayons_taste_graph.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });
+		
+		
+		$('#crayon_interest_graph').click(function(){
+            $.ajax({
+                url: 'crayon_interest_graph.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });
+		
+		
+		$('#rise_of_chioce_engines').click(function(){
+            $.ajax({
+                url: 'rise_of_chioce_engines.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });
+		
+		
+		$('#clients_we').click(function(){
+            $.ajax({
+                url: 'clients_we.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+		
+		$('#brand_crayon').click(function(){
+            $.ajax({
+                url: 'brand_crayon.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+		
+		$('#founders').click(function(){
+            $.ajax({
+                url: 'founders.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+		
+		$('#the_team').click(function(){
+            $.ajax({
+                url: 'the_team.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+		
+		$('#support_system').click(function(){
+            $.ajax({
+                url: 'support_system.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+		
+		$('#our_values').click(function(){
+            $.ajax({
+                url: 'our_values.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+		
+		
+		$('#our_quest').click(function(){
+            $.ajax({
+                url: 'our_quest.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+		
+		
+		$('#strike_gold').click(function(){
+            $.ajax({
+                url: 'strike_gold.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+		
+		
+		$('#life_at_crayon').click(function(){
+            $.ajax({
+                url: 'life_at_crayon.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+		
+		$('#join_us').click(function(){
+            $.ajax({
+                url: 'join_us.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+		
+		$('#blogs').click(function(){
+            $.ajax({
+                url: 'blogs.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+		
+		
+		$('#big_data_made_simple').click(function(){
+            $.ajax({
+                url: 'big_data_made_simple.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+		
+		
+		$('#awards_news').click(function(){
+            $.ajax({
+                url: 'awards_news.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+		
+		
+		$('#news1').click(function(){
+            $.ajax({
+                url: 'news1.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+		
+		$('#whitepaper').click(function(){
+            $.ajax({
+                url: 'whitepaper.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                }
+            });
+        });	
+		
+        $('#contact_form').click(function(){
+            $.ajax({
+                url: 'form1.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                    $('#next_post').hide();
+                }
+            });
+        });
+	
+	$('#crayon-yoda').click(function(){
+            $.ajax({
+                url: 'crayon-yoda.html',
+                type: 'POST',
+                success: function(data) {
+                    $('#page_html').html(data);
+                    $('#page').removeClass('page_r');
+                    $('#page').addClass('page');
+                    $('#page_close').show();
+                    $('#next_post').hide();
+                }
+            });
+        });
+        $(document).on('click','#contact_form_submit',function(){
+            //$('#contact_form_fields').submit();
+            //alert($('#form1_name').val());
+
+            //$('#contact_form_fields').fadeOut('slow');
+            //$('#thank_you').fadeIn('slow');
+            //$('#validation_msg').fadeIn('slow');
+            //alert(str.length);
+            if($(this).attr('form') == 'contact_form')
+            {
+                if($('#form1_name').val() && $('#form1_city').val() && $('#form1_email').val() && $('#form1_phone').val())
+                {
+                    var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+                    if(pattern.test($('#form1_email').val()))
+                    {
+                        $('#form1_email').css('color','#000000');
+                        var pattern = new RegExp(/^[+0-9]{1,30}$/);
+                        var str = $('#form1_phone').val().replace(/\D/g,'');
+                        if(pattern.test($('#form1_phone').val()))
+                        {
+                            $('#form1_phone').css('color','#000000');
+                            $.ajax({
+                                url: 'form1_submit.php',
+                                type: 'POST',
+                                data: {form1_name:$('#form1_name').val(),form1_city : $('#form1_city').val(), form1_email : $('#form1_email').val(), form1_phone : $('#form1_phone').val(),form1_company : $('#form1_company').val(),form1_about : $('#form1_about').val()},
+                                success: function(data) {
+                                    //alert(data);
+                                    $('#contact_form_fields').fadeOut('slow');
+                                    $('#thank_you').fadeIn('slow');
+                                }
+                            });
+                        }
+                        else
+                        {
+                            $('#form1_phone').css('color','#EE5282');
+                        }
+                    }
+                    else
+                    {
+                        $('#form1_email').css('color','#EE5282');
+                    }
+                }
+                else
+                {
+                    $('#validation_msg').fadeOut('slow');
+                    $('#validation_msg').fadeIn('slow');
+                }
+            }
+            else if($(this).attr('form') == 'demo_form')
+            {
+                if($('#form2_name').val() && $('#form2_city').val() && $('#form2_email').val() && $('#form2_phone').val() && $('#form2_company_name').val())
+                {
+                    var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+                    if(pattern.test($('#form2_email').val()))
+                    {
+                        $('#form2_email').css('color','#000000');
+                        var pattern = new RegExp(/^[+0-9]{1,30}$/);
+                        var str = $('#form2_phone').val().replace(/\D/g,'');
+                        if(pattern.test($('#form2_phone').val()))
+                        {
+                            $('#form2_phone').css('color','#000000');
+                            $.ajax({
+                                url: 'form2_submit.php',
+                                type: 'POST',
+                                data: {form2_name:$('#form2_name').val(),form2_city : $('#form2_city').val(), form2_email : $('#form2_email').val(), form2_phone : $('#form2_phone').val(),form2_company : $('#form2_company_name').val(),form2_industry : $('#form2_industry').val(),form2_others : $('#form2_others').val(),form2_about : $('#form2_about').val()},
+                                success: function(data) {
+                                    //alert(data);
+                                    $('#contact_form_fields').fadeOut('slow');
+                                    $('#thank_you').fadeIn('slow');
+                                }
+                            });
+                        }
+                        else
+                        {
+                            $('#form2_phone').css('color','#EE5282');
+                        }
+                    }
+                    else
+                    {
+                        $('#form2_email').css('color','#EE5282');
+                    }
+                }
+                else
+                {
+                    $('#validation_msg').fadeOut('slow');
+                    $('#validation_msg').fadeIn('slow');
+                }
+            }
+            else if($(this).attr('form') == 'join_us')
+            {
+                if($('#form3_name').val() && $('#form3_city').val() && $('#form3_email').val() && $('#form3_phone').val() && $('#form3_stream').val())
+                {
+                    var pattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+                    if(pattern.test($('#form3_email').val()))
+                    {
+                        $('#form3_email').css('color','#000000');
+                        var pattern = new RegExp(/^[+0-9]{1,30}$/);
+                        var str = $('#form3_phone').val().replace(/\D/g,'');
+                        if(pattern.test($('#form3_phone').val()))
+                        {
+                            $('#form3_phone').css('color','#000000');
+                            /*$.ajax({
+                                url: 'form3_submit.php',
+                                type: 'POST',
+                                data: {form3_name:$('#form3_name').val(),form3_city : $('#form3_city').val(), form3_email : $('#form3_email').val(), form3_phone : $('#form3_phone').val(),form3_cv : $('#form3_cv').val(),form3_about : $('#form3_about').val(),form3_stream : $('#form3_stream').val(),form3_degree : $('#form3_degree').val(),form3_others : $('#form3_others').val() },
+                                success: function(data) {
+                                    //alert(data);
+                                    $('#contact_form_fields').fadeOut('slow');
+                                    $('#thank_you').fadeIn('slow');
+                                }
+                            });
+                            */
+                            $('#contact_form_fields').submit();
+                            $('#contact_form_fields').fadeOut('slow');
+                            $('#thank_you').fadeIn('slow');
+                            var a = +$("#animated_div").offset().top+360;
+			        $('#animated_div').animate({
+			            scrollTop:a
+			        }, 2000);
+                        }
+                        else
+                        {
+                            $('#form3_phone').css('color','#EE5282');
+                        }
+                    }
+                    else
+                    {
+                        $('#form3_email').css('color','#EE5282');
+                    }
+                }
+                else
+                {
+                    $('#validation_msg').fadeOut('slow');
+                    $('#validation_msg').fadeIn('slow');
+                }
+            }
+        });
+        $('#coverflow_overlay').click(function(){
+            $('#coverflow_close').fadeOut('slow');
+            $('#coverflow_parent').removeClass('page');
+            $('#coverflow_parent').addClass('page_r');
+            $('#fadeandscale_ul').html('');
+        });
+                setTimeout(function(){
+            $('#page_loader').hide();
+            $('#chart').fadeIn();
+        },1500)
+    });

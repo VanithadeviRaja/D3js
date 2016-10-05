@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+.area:hover {
+  fill: brown;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.area {
+  fill: steelblue;
+}
+.dot {
+  fill: white;
+  stroke: black;
+  stroke-width: 1.5px;
+}
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+</style>
+<body>
+<label>Start date:</label><input type="date" id="Startdate"/>
+<label>End date:</label><input type="date" id="Enddate"/><br>
+<input type="button" value="submit" onclick="updatedata()">
+<script src="http://localhost/d3/d3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script src="https://d3js.org/d3-array.v1.min.js"></script>
+<script>
+
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var parseDate = d3.time.format("%Y-%m-%d").parse;
+
+var x = d3.time.scale()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .ticks(12)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .ticks(25)
+    .orient("left");
+
+var area = d3.svg.area()
+    .x(function(d) { return x(d.date); })
+    .y0(height)
+    .y1(function(d) { return y(d.sessions); });
+  var area1 = d3.svg.area()
+    .x(function(d1) { return x(d1.date); })
+    .y0(height)
+    .y1(function(d1) { return y(d1.sessions); });
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>Sessions:</strong> <span style='color:white'>" + d.sessions + "</span>";
+  })
+
+d3.csv("datases.csv", function(data) {
+ // if (error) throw error;
+  data.forEach(function(d) {
+    d.date =parseDate(d.date);
+    d.sessions = +d.sessions;
+  });
+
+  x.domain(d3.extent(data, function(d) { return d.date; }));
+  y.domain(d3.extent(data, function(d) { return d.sessions; }));
+
+   var startdate = document.getElementById("Startdate").value;
+    //alert(startdate);
+    var enddate = document.getElementById("Enddate").value;
+var filteredData = data.filter(function(d1) 
+{ 
+   return (d1["date"]>=startdate && d1["date"]<=enddate);
+    });
+  svg.append("path")
+      .data(filteredData)
+      .attr("d1", area1(filteredData))
+      .attr("fill","steelblue")
+      .attr("filteredData", "area1");
+svg.append("path")
+      .data(data)
+      .attr("d", area(data))
+      .attr("fill","steelblue")
+      .attr("data", "area");
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Sessions");
+  svg.selectAll(".dot")
+    .data(data.filter(function(d) { return d.sessions; }))
+  .enter().append("circle")
+    .attr("class", "dot")
+    .attr("cx", area.x())
+    .attr("cy", area.y())
+    .attr("r", 3.5)
+    .on('mouseover', tip.show)
+     .on('mouseout', tip.hide)
+  svg.call(tip);
+});
+
+  function updatedata(){
+    //alert(document.getElementById("Startdate").value);
+    var startdate = document.getElementById("Startdate").value;
+    //alert(startdate);
+    var enddate = document.getElementById("Enddate").value;
+
+
+    d3.csv("datases.csv", function(data) {
+  var filteredData = data.filter(function(d) 
+{ 
+   return (d["date"]>=startdate && d["date"]<=enddate);
+    });
+console.log(filteredData);
+    //alert(startdate);
+    filteredData.forEach(function(d1){
+      d1.date= parseDate(d1.date);
+          d1.sessions=+d1.sessions;
+        });
+      x.domain(d3.extent(filteredData, function(d1) { return d1.date;}));
+     // alert(d.date);
+    
+  y.domain(d3.extent(filteredData, function(d1) { return d1.sessions; }));
+
+    
+   var svg = d3.select("body").transition();
+        svg.select(".x.axis") // change the x axis
+            .duration(750)
+            .call(xAxis);
+        svg.select(".y.axis") // change the y axis
+            .duration(750)
+            .call(yAxis);
+        //svg.select("svg:g")
+          //g.append(path)
+          //svg.select(path)
+          svg.select(".area1")
+          .duration(750)
+          .attr('d1',area1(filteredData))
+          .attr("fill","steelblue");
+          //svg.append(path)
+          //svg.select(".area")
+          //.duration(750)
+            //.attr("d",area(filteredData))
+            //.attr("fill","steelblue");
+          //d3.data(filteredData)  
+        svg.selectAll(".dot")
+        .duration(750)
+    .attr("class", "dot")
+    .attr("cx", area.x())
+    .attr("cy", area.y())
+    .attr("r", 3.5);
+  
+  })
+  }
+</script>
+</body>
+</html>

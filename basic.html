@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<title>basic chart details</title>
+<script src="http://localhost/d3/d3.min.js"></script>
+</head>
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+/*.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}*/
+
+/*.x.axis path {
+  display: none;
+}*/
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+</style>
+<body>
+<script>
+//creating canvas
+var canvas=d3.select("body")
+			.append("svg")
+			.attr("width",500)
+			.attr("height",500);
+var x=d3.scale.linear()
+		.range([0,100]);
+var y=d3.scale.linear()
+		.range([0,100]);
+var xaxis=d3.svg.axis()
+			.scale(x)
+			.ticks(10)
+			.orient("bottom");
+var yaxis=d3.svg.axis()
+			.scale(y)
+			.ticks(10)
+			.orient("left");
+	canvas.append("g")
+		.attr("class","xaxis")
+		.attr("transform", "translate(0,450)")
+		.call(xaxis);
+	canvas.append("g")
+		.attr("class","yaxis")
+		.call(yaxis);
+
+</script>
+</body>
+</html>

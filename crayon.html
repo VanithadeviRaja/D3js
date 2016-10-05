@@ -1,0 +1,523 @@
+
+//alert(window.innerWidth);
+//alert(window.innerHeight);
+var width = window.innerWidth,
+        height = $("#chart").innerHeight(),
+        root;
+
+
+var force = d3.layout.force()
+        .linkDistance(160)
+        .charge(-1050)
+        .gravity(.06)
+        .size([width, height])
+        .on("tick", tick);
+/*
+ var force = d3.layout.force()
+ .gravity(0.06)
+ .charge(-1500)
+ .linkDistance(200)
+ .size([width, height])
+ .on("tick", tick);;
+ */
+var svg = d3.select("#chart").append("svg")
+        .attr("width", '100%')
+        .attr("height", '100%');
+
+var link = svg.selectAll(".link"),
+        node = svg.selectAll(".node");
+
+
+var root={
+    "name": "",
+    "r":0,
+    "icon": "images/logo.png",
+    "gray_icon" : "images/logo.png",
+    "c_icon" : "images/logo.png",
+    //"title" : "WE SIMPLIFY THE WORLD'S CHOICES",
+    "fixed" : false,
+    "children": [
+        {
+            "name": "",
+            "r":0,
+            "icon": "images/1.png",
+            "gray_icon" : "images/1_g.png",
+            "c_icon" : "images/1_c.png",
+            "children": [
+                {"name": "", "r":1, "s_icon":"images/ln1.png" ,"story_slno":1},
+                {"name": "", "r":1, "s_icon":"images/ln2.png" ,"story_slno":2},
+                {"name": "", "r":1, "s_icon":"images/ln3.png" ,"story_slno":3},
+                {"name": "", "r":1, "s_icon":"images/ln6.png" ,"story_slno":6},
+				 {"name": "", "r":1, "s_icon":"images/ln14.png" ,"story_slno":14},
+			
+
+
+                /* {"name": "<tspan x='0' y='-8'>rise of</tspan><tspan x='0' dy='7'>choice</tspan><tspan x='0' dy='7'>engines</tspan>", "full_name": "<tspan x='0' y='-15'>rise of</tspan><tspan x='0' dy='15'>choice</tspan><tspan x='0' dy='15'>engines</tspan>", "r":26, "color" : '#3a528e',"story_slno":1},
+                 {"name": "<tspan x='0' y='-8'>crayon's</tspan><tspan x='0' dy='7'>taste</tspan><tspan x='0' dy='7'>graph</tspan>", "full_name": "<tspan x='0' y='-15'>crayon's</tspan><tspan x='0' dy='15'>taste</tspan><tspan x='0' dy='15'>graph</tspan>", "r":26, "color" : '#3a528e',"story_slno":2},
+                 {"name": "<tspan x='0' y='-4'>our</tspan><tspan x='0' dy='7'>platform</tspan>", "full_name": "<tspan x='0' y='-8'>our</tspan><tspan x='0' dy='15'>platform</tspan>", "r":26, "color" : '#3a528e',"story_slno":3},
+                 {"name": "<tspan x='0' y='-8'>analytics</tspan><tspan x='0' dy='7'>is</tspan><tspan x='0' dy='7'>dying</tspan>", "full_name": "<tspan x='0' y='-15'>analytics</tspan><tspan x='0' dy='15'>is</tspan><tspan x='0' dy='15'>dying</tspan>", "r":26, "color" : '#3a528e',"story_slno":4},
+                 {"name": "<tspan x='0' y='-8'>magic</tspan><tspan x='0' dy='7'>of</tspan><tspan x='0' dy='7'>maya</tspan>", "full_name": "<tspan x='0' y='-15'>magic</tspan><tspan x='0' dy='15'>of</tspan><tspan x='0' dy='15'>maya</tspan>", "r":26, "color" : '#3a528e',"story_slno":5},
+                 {"name": "<tspan x='0' y='-8'>crayon's</tspan><tspan x='0' dy='7'>interest</tspan><tspan x='0' dy='7'>graph</tspan>", "full_name": "<tspan x='0' y='-15'>crayon's</tspan><tspan x='0' dy='15'>interest</tspan><tspan x='0' dy='15'>graph</tspan>", "r":26, "color" : '#3a528e',"story_slno":6} */
+            ],
+            "title" : "HARNESS THE POWER OF BIG DATA",
+            //"display_name" : "TECHNOLOGY"
+        },
+        {
+            "name": "",
+            "r":0,
+            "icon": "images/2.png",
+            "c_icon" : "images/2_c.png",
+            "gray_icon" : "images/2_g.png",
+            "children": [
+                
+                {"name": "", "r":1, "s_icon":"images/ln8.png" ,"story_slno":8},				
+				{"name": "", "r":1, "s_icon":"images/nd2.png" ,"story_slno":75},
+				{"name": "", "r":1, "s_icon":"images/nd3.png" ,"story_slno":76},
+				{"name": "", "r":1, "s_icon":"images/nd4.png" ,"story_slno":77},
+				{"name": "", "r":1, "s_icon":"images/nd5.png" ,"story_slno":78}
+                
+            ],
+            "title" : "LATEST IN CRAYON",
+            //"display_name" : "OUR PEOPLE"
+        },
+{
+            "name": "",
+            "r":0,
+            "icon": "images/7_m.png",
+            "c_icon" : "images/7_c.png",
+            "gray_icon" : "images/7_g.png",
+            "children": [
+                 {"name": "", "r":1, "s_icon":"images/ln71.png" ,"story_slno":71},
+                {"name": "", "r":1, "s_icon":"images/ln72.png" ,"story_slno":72},
+                {"name": "", "r":1, "s_icon":"images/lat_suresh.png" ,"story_slno":82},
+            ],
+            "title" : "A BOX FULL OF CRAYONS",
+            //"display_name" : "OUR PEOPLE"
+        },
+
+        {
+            "name": "",
+            "r":0,
+            "icon": "images/3.png",
+            "c_icon" : "images/3_c.png",
+            "gray_icon" : "images/3_g.png",
+            "children": [
+                {"name": "", "r":1, "s_icon":"images/ln10.png" ,"story_slno":10},
+                {"name": "", "r":1, "s_icon":"images/ln11.png" ,"story_slno":11},
+                {"name": "", "r":1, "s_icon":"images/ln12.png" ,"story_slno":12},
+			{"name": "", "r":1, "s_icon":"images/ln30.png" ,"story_slno":30},
+                {"name": "", "r":1, "s_icon":"images/ln13.png" ,"story_slno":13},               
+		{"name": "", "r":1, "s_icon":"images/ln5.png" ,"story_slno":5}
+            ],
+            "title" : "MAKE DATA SERVE YOU BETTER",
+            //"display_name" : "SOLUTIONS"
+        },
+        {
+            "name": "",
+            "r":0,
+            "icon": "images/5.png",
+            "c_icon" : "images/5_c.png",
+            "gray_icon" : "images/5_g.png",
+            "children": [
+                {"name": "", "r":1, "s_icon":"images/ln15.png" ,"story_slno":15},
+                {"name": "", "r":1, "s_icon":"images/ln16.png" ,"story_slno":16},
+                {"name": "", "r":1, "s_icon":"images/awards.png" ,"story_slno":17},				
+                {"name": "", "r":1, "s_icon":"images/news.png" ,"story_slno":23}
+                
+
+            ],
+            "title" : "TAKE GIANT LEAPS WITH DATA",
+            //"display_name" : "RESOURCES"
+        },
+        {
+            "name": "",
+            "r":0,
+            "icon": "images/6.png",
+            "c_icon" : "images/6_c.png",
+            "gray_icon" : "images/6_g.png",
+            "children": [
+                {"name": "", "r":1, "s_icon":"images/ln18.png" ,"story_slno":18},
+				{"name": "", "r":1, "s_icon":"images/ln7.png" ,"story_slno":7},
+				{"name": "", "r":1, "s_icon":"images/ln9.png" ,"story_slno":9},
+                {"name": "", "r":1, "s_icon":"images/ln21.png" ,"story_slno":21},
+				{"name": "", "r":1, "s_icon":"images/nd1.png" ,"story_slno":74},				
+
+            ],
+            "title" : "AN IDEA, A NAPKIN AND A BUNCH OF COLOURS"
+            //"display_name" : "ABOUT US"
+        }
+    ]
+};
+
+
+update();
+/*root.children.forEach(function(d){
+ d._children = d.children;
+ d.children = null;
+ });
+ alert();*/
+root.children.forEach(function(d){
+    d._children = d.children;
+    d.children = null;
+});
+root._children = root.children;
+root.children = null;
+update();
+
+//nodes.forEach(function(d) {
+//    d._children = d.children;
+//    d.children = null;
+//});
+//d3.json("graph.json", function(error, json) {
+//    root = json;
+//    update();
+//});
+
+
+function update() {
+
+    var nodes = flatten(root),
+            links = d3.layout.tree().links(nodes);
+    
+
+   
+    force
+            .nodes(nodes)
+            .links(links)
+            .start();
+
+    // Update links.
+    link = link.data(links, function(d) { return d.target.id; });
+
+    link.exit().remove();
+
+    link.enter().insert("line", ".node")
+            .attr("class", "link");
+
+    // Update nodes.
+    node = node.data(nodes, function(d) { return d.id; });
+
+    node.exit().remove();
+
+    var nodeEnter = node.enter().append("g")
+            .attr("class", "node")
+            .on("click", click)
+            .on("mouseover", mouseover)
+            .on("mouseout", mouseout)
+            .call(force.drag);
+
+    nodeEnter.append("circle")
+            .attr("r", function(d) { return d.r; }).attr("_r", function(d) { return d.r; });
+
+    nodeEnter.append("image")
+            .attr("xlink:href", function(d) { return d.gray_icon; })
+            .attr("x", "-40px")
+            .attr("y", "-40px")
+            .attr("width", "80px")
+            .attr("height", "80px")
+            .attr("class", "parent_g others");
+
+    nodeEnter.append("image")
+            .attr("xlink:href", function(d) { return d.c_icon; })
+            .attr("x", "-46px")
+            .attr("y", "-46px")
+            .attr("width", "92px")
+            .attr("height", "92px")
+            .attr("class", "parent_c others");
+
+
+    nodeEnter.append("image")
+            .attr("xlink:href", function(d) { return d.icon; })
+            .attr("x", "-46px")
+            .attr("y", "-46px")
+            .attr("width", "92px")
+            .attr("height", "92px")
+            .attr("class", "parent");
+    nodeEnter.append("image")
+            .attr("xlink:href", function(d) { return d.s_icon; })
+            .attr("x", "-40px")
+            .attr("y", "-40px")
+            .attr("width", "80px")
+            .attr("height", "80px")
+            .attr("class", "parent_s");
+
+    nodeEnter.append("text")
+            .attr("dy", ".35em")
+            .html(function(d) { return d.name; })
+            .attr("full_name",function(d) { return d.full_name; })
+            .attr("story_slno", function(d) { return d.story_slno; })
+            .attr("name",function(d) { return d.name; })
+            .attr("font-size","6px");
+
+    node.select("circle")
+            .style("fill", color);
+}
+
+function mouseover(d) {
+    //alert(d);
+    if(d3.select(this).select("circle").attr('r') != 0)
+    {
+        d3.select(this).select('.parent_s').transition().duration(750)
+                .attr("x", "-48px").attr("y", "-48px").attr("height",'96px').attr("width",'96px');
+        /* d3.select(this).select("circle").transition()
+         .duration(750)
+         .attr("r", +d3.select(this).select("circle").attr('_r') + 20);
+         //alert(d3.select(this).select("text").text());
+         d3.select(this).select("text").html(d3.select(this).select("text").attr('full_name'));
+         d3.select(this).select("text").transition()
+         .duration(750).attr("font-size",'14px').attr("font-weight",'bold');
+         //d3.select(this).select("text").transition({ "-webkit-transform": "translate3d(0px, " + e + "px, 0px) scale(4)" });
+         //d3.select(this).select("text").transition()
+         //        .duration(750).attr("transform",'scale(2.0)').attr("-webkit-transform",'scale(2.0)');*/
+    }
+    else if(d3.select(this).select("image").attr('href') == "images/logo.png")
+    {
+        if (d3.event.defaultPrevented) return; // ignore drag
+        //alert(d._children);
+        if (!d.children) {
+            d.children = d._children;
+            d._children = null;
+            update();
+            $('#center_title').fadeOut(500);
+            //$('#top_title').fadeIn(500);
+            /*$('#top_title').removeClass('letter_spacing');
+             $('#top_title').text(root.title);
+             $('#top_title').addClass('letter_spacing');
+             */
+            $('#top_title').removeClass('letter_spacing');
+            $('#top_title').text('').css({'letterSpacing':'20px'});
+            $('#top_title').text(root.title);
+            $('#top_title').animate({letterSpacing: "5px"},{ queue:false });
+            /*var dv = $('#top_title');
+             dv.text("");
+             jQuery({count:0}).animate({count:root.title.length}, {
+             duration: 2500,
+             step: function() {                dv.text(root.title.substring(0, Math.round(this.count)));
+             }
+             });
+             d.fixed = true;
+             */
+        }
+    }
+    else
+    {
+        //alert(d3.select(this).select('.parent_s').attr('x'));
+        //alert(d3.event.pageX + "px");
+        /*d3.select("#tooltip")
+         .style("left", d3.select(this).select('.parent_s').attr('x'))
+         .style("top", d3.select(this).select('.parent_s').attr('y'))
+         .style("opacity", 1)
+         .select("#value")
+         .text(d.title);
+      /*   
+        d3.select("#tooltip")
+                .style("left", d3.event.pageX + "px")
+                .style("top", d3.event.pageY + "px")
+                .style("opacity", 1)
+                .select("#value")
+                .text(d.display_name); */
+    }
+}
+
+function mouseout() {
+    if(d3.select(this).select("circle").attr('r') != 0)
+    {
+        d3.select(this).select('.parent_s').transition().duration(750)
+                .attr("x", "-40px").attr("y", "-40px").attr("height",'80px').attr("width",'80px');
+        /* d3.select(this).select("text").html(d3.select(this).select("text").attr('name'));
+         d3.select(this).select("text").transition()
+         .duration(750).attr("font-size",'6px').attr("font-weight",'');*/
+    }
+    d3.select(this).select("circle").transition()
+            .duration(750)
+            .attr("r", +d3.select(this).select("circle").attr('_r'));
+    d3.select("#tooltip")
+            .style("left", "0px")
+            .style("top", "-200px")
+            .style("opacity", 0)
+            .select("#value")
+            .text('');
+}
+
+
+function tick() {
+    /*link.attr("x1", function(d) { return d.source.x; })
+     .attr("y1", function(d) { return d.source.y; })
+     .attr("x2", function(d) { return d.target.x; })
+     .attr("y2", function(d) { return d.target.y; });
+     */
+    link.attr("x1", function(d) { return Math.max((+d.source.r+64), Math.min(document.body.clientWidth - (+d.source.r+64), d.source.x)); })
+            .attr("y1", function(d) { return Math.max((+d.source.r+64), Math.min($("#chart").innerHeight() - (+d.source.r+64), d.source.y)); })
+            .attr("x2", function(d) { return Math.max((+d.target.r+64), Math.min(document.body.clientWidth - (+d.target.r+64), d.target.x)); })
+            .attr("y2", function(d) { return Math.max((+d.target.r+64), Math.min($("#chart").innerHeight() - (+d.target.r+64), d.target.y)); });
+    //node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+    node.attr("transform", function(d) { return "translate(" + Math.max((+d.r+64), Math.min(document.body.clientWidth - (+d.r+64), d.x)) + "," + Math.max((+d.r+64), Math.min($("#chart").innerHeight() - (+d.r+64), d.y)) + ")"; });
+    /*node.attr("cx", function(d) { return d.x = Math.max(r, Math.min(width - r, d.x)); })
+     .attr("cy", function(d) { return d.y = Math.max(r, Math.min(height - r, d.y)); });*/
+}
+
+function color(d) {
+
+    /*
+     return d._children ? "#f1ba0b" // collapsed package
+     : d.children ? "#f1ba0b" // expanded package
+     : "#f1ba0b"; // leaf node
+     */
+    return d.color;
+}
+
+// Toggle children on click.
+function click(d) {
+    //alert(d._children);
+    if (d3.event.defaultPrevented) return; // ignore drag
+    //alert(d._children);
+    if(d.children || d._children || d3.select(this).select("image").attr('href'))
+    {
+        if(d3.select(this).select("image").attr('href') != "images/logo.png" && d3.select(this).select("image").attr('href'))
+        {
+            root.children.forEach(function(d1){
+                if(d1.children && d.children != d1.children)
+                {
+                    d1._children = d1.children;
+                    d1.children = null;
+                }
+            });
+        }
+        if (d.children) {
+            d._children = d.children;
+            d.children = null;
+        } else {
+            d.children = d._children;
+            d._children = null;
+        }
+        update();
+        //alert();
+
+        if(d3.select(this).select("image").attr('href') != "images/logo.png" && d3.select(this).select("image").attr('href') && d.children)
+        {
+            //alert();
+
+            /*  d3.selectAll(".parent").classed("others",true);
+             d3.selectAll(".parent_g").classed("others",false);
+             d3.select(this).select(".parent").classed("others", false);
+             d3.select(this).select(".parent_g").classed("others", true);*/
+
+
+            d3.selectAll(".parent").classed("others",true);
+            d3.selectAll(".parent_c").classed("others",true);
+            d3.selectAll(".parent_g").classed("others",false);
+            d3.select(this).select(".parent").classed("others", true);
+            d3.select(this).select(".parent_c").classed("others", false);
+            d3.select(this).select(".parent_g").classed("others", false);
+
+
+            /*$('#top_title').text(d.title);
+             $('#top_title').removeClass('letter_spacing');
+             $('#top_title').text(d.title);
+             $('#top_title').addClass('letter_spacing_r');
+             $('#top_title').text(d.title);
+             $('#top_title').addClass('letter_spacing');
+             */
+            
+            
+            /*$('#top_title').removeClass('letter_spacing');
+            $('#top_title').text('').css({'letterSpacing':'20px'});
+            $('#top_title').text(d.title);
+            $('#top_title').animate({letterSpacing: "5px"},{ queue:false });
+            */
+            
+            /*var dv = $('#top_title');
+             dv.text("");
+             jQuery({count:0}).animate({count:d.title.length}, {
+             duration: 2500,
+             step: function() {                dv.text(d.title.substring(0, Math.round(this.count)));
+             }
+             }); */
+        }
+        else
+        {
+            d3.selectAll(".parent_g").classed("others",true);
+            d3.selectAll(".parent_c").classed("others",true);
+            d3.selectAll(".parent").classed("others",false);
+            $('#top_title').removeClass('letter_spacing');
+            $('#top_title').text(root.title);
+            $('#top_title').animate({letterSpacing: "5px"},{ queue:false });
+            /* var dv = $('#top_title');
+             dv.text("");
+             jQuery({count:0}).animate({count:root.title.length}, {
+             duration: 2500,
+             step: function() {                dv.text(root.title.substring(0, Math.round(this.count)));
+             }
+             });*/
+        }
+        /*if(d3.select(this).select("image").attr('href') != "images/logo.png")
+         {
+         d3.select(this).select("image").transition()
+         .duration(750)
+         .attr("opacity", 0);
+         }
+         */
+    }
+    else
+    {
+        //alert(d3.select(this).select("text").attr('story_slno'));
+        var story_slno = d3.select(this).select("text").attr('story_slno');
+        $('#fadeandscale_ul').html(" ");
+        $('#coverflow_parent').removeClass('page_r');
+        $('#coverflow_parent').addClass('page');
+        $('#coverflow_close').fadeIn();
+
+	
+        var request = $.ajax({
+            url: 'cover.php',
+            type: 'POST',
+            data: {story_slno:story_slno},
+            success: function(data) {
+
+
+	
+        var request = $.ajax({
+            url: data,
+            type: 'POST',
+            data: {story_slno:story_slno},
+            success: function(data) {
+                $('#page_html').html(data);
+                $('#page').removeClass('page_r');
+                $('#page').addClass('page');
+                $('#page_close').show();
+                $('#next_post').show();
+            }
+        });
+		}
+         
+            
+        });
+
+        request.done(function() {
+             $('#coverflow_loader').hide();
+	    $('#coverflow_parent').hide();
+	    $('#coverflow_close').hide();
+            $('#effects_parent').css('opacity','1');
+            //alert( "Data Saved: ");
+        });
+        //$('#coverflow_parent').removeClass('page_r');
+        //$('#coverflow_parent').addClass('page');
+        //$('#coverflow_close').fadeIn();
+    }
+}
+
+// Returns a list of all nodes under the root.
+function flatten(root) {
+    var nodes = [], i = 0;
+    function recurse(node) {
+        //alert(JSON.stringify(node));
+        if (node.children) node.children.forEach(recurse);
+        if (!node.id) node.id = ++i;
+        //node.id = ++i;
+        //alert(node.join());
+        nodes.push(node);
+    }
+    recurse(root);
+    //alert(nodes.join());
+    return nodes;
+}

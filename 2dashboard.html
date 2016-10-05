@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+<head>
+<title>Creative dashboard version_2</title>
+</head>
+<style>
+ body {
+font: 10px sans-serif;
+       }
+  .arc path {
+ stroke: #fff;
+       }
+
+svg text{
+  text-anchor:middle;
+  font-size:18px;
+}
+svg .values text{
+  pointer-events:none;
+  stroke-width: 0.5px;
+}
+.groups:hover{
+  cursor:pointer;
+  font-weight:bold;
+}
+#funnel{
+  position:absolute;
+  top:20px;
+  left:0px;
+  width:300px;
+  height:400px;
+}
+#chord{
+	position:absolute;
+	top:550px;
+	left:150px;
+	height: 500px;
+}
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background:rgb(212, 152, 118);
+  color: black;
+  /*border:5px black solid;*/
+  border-radius: 2px;
+}
+  .d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  border-color:black;
+  font-size: 8px;
+  width: 100%;
+  line-height: 1;
+  color: black;
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  border-color:black;
+  left: 0;
+}
+</style>
+<body>
+<div id="funnel"></div>  
+ <div id="chord"></div>
+<script src="http://localhost/d3/d3.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="http://vizjs.org/viz.v1.1.2.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script src="https://s3-ap-southeast-1.amazonaws.com/charts.pykih.com/gists/funnel.js"></script>
+<script>
+function chord(){
+	var width=760, height=860
+	,outerRadius = Math.min(width, height) * 0.5 - 40
+    ,innerRadius = outerRadius - 30;
+	
+var m = [
+  [11975,  5871, 8916, 2868],
+  [ 1951, 10048, 2060, 6171],
+  [ 8010, 16145, 8090, 8045],
+  [ 1013,   990,  940, 6907]
+];
+var data=[];
+m.forEach(function(r,i){ r.forEach(function(c,j){ data.push([i,j,c])})});
+
+var colors = ["#000000", "#FFDD89", "#957244", "#F26223"];
+
+var ch = viz.ch().data(data).padding(.05)
+	  	  .innerRadius(innerRadius)
+	  	  .outerRadius(outerRadius)
+	  	  .label(function(d){ return ""})
+	  	  .startAngle(1.5*Math.PI)
+	  	  .fill(function(d){ return colors[d];});
+
+var svg = d3.select("#chord").append("svg").attr("height",height).attr("width",width);
+
+svg.append("g").attr("transform", "translate("+width/2+","+height/2+")").call(ch);
+d3.select(self.frameElement).style("height", height+"px").style("width", width+"px");
+}
+chord();
+function funnel(){
+	var width =500,
+                height = 400,
+                radius = Math.min(width, height) / 2;
+
+            var color = d3.scale.ordinal()
+                .range(["#255aee","#3a6fff","#4f84ff","rgb(101,154,302)","rgb(122,175,323)", "rgb(144,197,345)", "rgb(165,218,366)"]);
+
+            var svg = d3.select("#funnel").append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .append("g")
+   var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])          
+.html(function(d) {
+   return "<strong>Sessions:</strong> <span style='color:red'>" + d.sales_process+ "</span>";
+    })
+            d3.csv("funnel.csv", function(error, data) {
+                var funnel = d3.funnel()
+                    .size([width,height])
+                    .mouth([100,100])
+                    .value(function(d) { return d.value; });           
+                var line = d3.svg.line()
+                    .interpolate('linear-closed')
+                    .x(function(d,i) { return d.x; })
+                    .y(function(d,i) { return d.y; });
+                
+//creating multiple groups inside the group
+
+                var g = svg.selectAll(".funnel-group")
+                    .data(funnel(data))
+                    .enter().append("g")
+                    .attr("class", "funnel-group");
+    	
+                g.append("path")
+                    .attr("d", function (d){ return line(d.coordinates); })
+                    .style("fill", function(d) { return color(d.sales_process); })
+                    .on('mouseover', tip.show)
+     				.on('mouseout', tip.hide)
+ 					.style("text-anchor", "middle")
+                 	.text(function(d) { return d.sales_process; });
+    	
+                g.append("text")
+                    .attr({
+                        "y": function (d,i) {
+                            if(d.coordinates.length === 4) {
+                                return (((d.coordinates[0].y-d.coordinates[1].y)/2)+d.coordinates[1].y) + 5;
+                            } else {
+                                return (d.coordinates[0].y + d.coordinates[1].y)/2 + 10;
+                            }
+                        },
+                        "x": function (d,i) { return width/2;}
+                    }) 
+                    svg.call(tip);      
+            });
+}
+funnel();
+</script>
+</body>
+<html>

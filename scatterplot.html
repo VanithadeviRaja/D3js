@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  stroke: #000;
+}
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+</style>
+<body>
+<script src="http://localhost/d3/d3.min.js"></script>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script>
+
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+/*var x = d3.scale.linear()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);*/
+var xScale = d3.scale.log().domain([100, 1e5]).range([0, width]),
+    yScale = d3.scale.linear().domain([10, 85]).range([height, 0]),
+    radiusScale = d3.scale.sqrt().domain([0, 5e8]).range([0, 40]),
+    colorScale = d3.scale.category10();
+var color = d3.scale.category10();
+
+var xAxis = d3.svg.axis()
+    .scale(xScale)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(yScale)
+    .orient("left");
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) {
+    return "<strong>Sessions:</strong> <span style='color:white'>" + d.sessions + "</span>";
+  })
+d3.csv("plot.csv", function( data) {
+  //if (error) throw error;
+
+  data.forEach(function(d) {
+    d.sessions = +d.sessions;
+    d.newusers = +d.newusers;
+    d.bouncerate = +d.bouncerate;
+    d.country = + d.country;
+  });
+function x(d) { return d.sessions; }
+function y(d) { return d.bouncerate; }
+function radius(d) { return d.newusers; }
+function color(d) { return d.country; }
+//function key(d) { return d.name; }
+  //x.domain(d3.extent(data, function(d) { return d.sessions; })).nice();
+  //y.domain(d3.extent(data, function(d) { return d.bouncerate; })).nice();
+var diameter = 500,
+ scatter = d3.layout.pack()
+    .sort(null)
+    .size([diameter, diameter])
+    .padding(1.5);
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("x", width)
+      .attr("y", -6)
+      .style("text-anchor", "end")
+      .text("Sessions");
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("class", "label")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Bounce Rate (%)")
+
+  svg.selectAll(".dot")
+      .data(data)
+    .enter().append("circle")
+      .attr("class", "dot")
+    //.attr("r",3.5)
+      .attr("r", function(d){return radiusScale(radius(d));})
+      .attr("cx", function(d) { return xScale(x(d)); })
+      .attr("cy", function(d) { return yScale(y(d)); })
+     .style("fill", function(d) { return colorScale(color(d)); })
+      .on('mouseover', tip.show)
+     .on('mouseout', tip.hide)
+  svg.call(tip);
+  /*var legend = svg.selectAll(".legend")
+      .data()
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  legend.append("rect")
+      .attr("x", width - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color);
+
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d.country; });*/
+
+});
+
+</script>
+</body>
+</html>
